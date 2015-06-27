@@ -4,6 +4,7 @@ import pyglet
 import os
 import random
 import re
+import sys
 
 DETECTION_NOISES_PATH = "\detection_start\\"
 DETECTION_END_NOISES_PATH = "\detection_end\\"
@@ -39,4 +40,8 @@ def exiter(dt):
     pyglet.app.exit()
 
 if __name__ == '__main__':
-    play_random_file(path + DETECTION_NOISES_PATH)
+    if sys.argv[1] == 'start':
+        play_random_file(path + DETECTION_NOISES_PATH)
+
+    elif sys.argv[1] == 'end':
+        play_random_file(path + DETECTION_END_NOISES_PATH)
