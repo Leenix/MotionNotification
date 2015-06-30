@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import pyglet
+import pygame
 import os
 import random
 import re
@@ -30,14 +30,10 @@ def build_file_list(file_path):
 
 def play_song(file):
     print "Playing sound: {}".format(file)
-    song = pyglet.media.load(file)
-    song.play()
-    pyglet.clock.schedule_once(exiter, song.duration)
-    pyglet.app.run()
+    pygame.mixer.init()
+    pygame.mixer.music.loads(file)
+    pygame.mixer.music.play()
 
-
-def exiter(dt):
-    pyglet.app.exit()
 
 if __name__ == '__main__':
     if sys.argv[1] == 'start':
@@ -45,3 +41,5 @@ if __name__ == '__main__':
 
     elif sys.argv[1] == 'end':
         play_random_file(path + DETECTION_END_NOISES_PATH)
+
+    pygame.time.sleep(3)
