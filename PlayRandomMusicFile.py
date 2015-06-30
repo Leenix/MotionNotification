@@ -32,15 +32,21 @@ def build_file_list(file_path):
 def play_song(file):
     print "Playing sound: {}".format(file)
     pygame.mixer.init()
-    pygame.mixer.music.load(file)
-    pygame.mixer.music.play()
-    time.sleep(3)
-    while pygame.mixer.music.get_busy:
-        continue
+    sound = pygame.mixer.Sound(file)
+    sound.play()
+    time.sleep(sound.get_length())
 
 if __name__ == '__main__':
-    if sys.argv[1] == 'start':
+
+    if len(sys.argv) > 1:
+
+        if sys.argv[1] == 'start':
+            play_random_file(path + DETECTION_NOISES_PATH)
+
+        elif sys.argv[1] == 'end':
+            play_random_file(path + DETECTION_END_NOISES_PATH)
+
+    else:
         play_random_file(path + DETECTION_NOISES_PATH)
 
-    elif sys.argv[1] == 'end':
-        play_random_file(path + DETECTION_END_NOISES_PATH)
+    sys.exit()
