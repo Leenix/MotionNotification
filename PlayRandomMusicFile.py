@@ -5,16 +5,17 @@ import os
 import random
 import re
 import sys
+import time
 
-DETECTION_NOISES_PATH = "\detection_start\\"
-DETECTION_END_NOISES_PATH = "\detection_end\\"
+DETECTION_NOISES_PATH = "/detection_start/"
+DETECTION_END_NOISES_PATH = "/detection_end/"
 path = os.path.dirname(os.path.abspath(__file__))
 
 
 def play_random_file(file_path):
-    file_list = build_file_list(file_path)
-    random.shuffle(file_list)
-    play_song(file_list[0])
+    randomfile = random.choice(os.listdir(file_path))
+    filename = file_path + randomfile
+    play_song(filename)
 
 
 def build_file_list(file_path):
@@ -31,9 +32,11 @@ def build_file_list(file_path):
 def play_song(file):
     print "Playing sound: {}".format(file)
     pygame.mixer.init()
-    pygame.mixer.music.loads(file)
+    pygame.mixer.music.load(file)
     pygame.mixer.music.play()
-
+    time.sleep(3)
+    while pygame.mixer.music.get_busy:
+        continue
 
 if __name__ == '__main__':
     if sys.argv[1] == 'start':
@@ -41,5 +44,3 @@ if __name__ == '__main__':
 
     elif sys.argv[1] == 'end':
         play_random_file(path + DETECTION_END_NOISES_PATH)
-
-    pygame.time.sleep(3)
